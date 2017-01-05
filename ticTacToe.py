@@ -3,6 +3,13 @@ theBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
             'low-L': ' ', 'low-M': ' ', 'low-R': ' '}
 
 
+def isEmpty(board, space):
+    if board[space] == ' ':
+        return True
+    else:
+        return False
+
+
 def printBoard(board):
     print(board['top-L'] + '|' + board['top-M'] + '|' + board['top-R'])
     print('-+-+-')
@@ -45,12 +52,14 @@ for i in range(0, 9):
     printBoard(theBoard)
     print('Turn for ' + turn + '. Move on which space?')
     move = input()
+    while move not in theBoard.keys():
+        print('Invalid space. Please enter it again.')
+        move = input()
+    while not isEmpty(theBoard, move):
+        print('That spot is taken, please try again.')
+        move = input()
     theBoard[move] = turn
-    # if checkIfWon(theBoard):
-    #     break
     if turn == 'X':
         turn = 'O'
     else:
         turn = 'X'
-
-input()

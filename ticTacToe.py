@@ -18,30 +18,30 @@ def printBoard(board):
     print(board['low-L'] + '|' + board['low-M'] + '|' + board['low-R'])
 
 
-def checkIfWon(board):
+def checkIfWon(board, letter):
     # check top row
-    if (board['top-L'] == board['top-M'] == board['top-R']) & (board['top-L'] != ' '):
+    if (board['top-L'] == board['top-M'] == board['top-R'] == letter):
         return True
     # check mid row
-    elif (board['mid-L'] == board['mid-M'] == board['mid-R']) & (board['mid-L'] != ' '):
+    elif (board['mid-L'] == board['mid-M'] == board['mid-R'] == letter):
         return True
     # check low row
-    elif (board['low-L'] == board['low-M'] == board['low-R']) & (board['low-L'] != ' '):
+    elif (board['low-L'] == board['low-M'] == board['low-R'] == letter):
         return True
     # check first col
-    elif (board['top-L'] == board['mid-L'] == board['low-L']) & (board['top-L'] != ' '):
+    elif (board['top-L'] == board['mid-L'] == board['low-L'] == letter):
         return True
     # check second col
-    elif (board['top-M'] == board['mid-M'] == board['low-M']) & (board['top-M'] != ' '):
+    elif (board['top-M'] == board['mid-M'] == board['low-M'] == letter):
         return True
     # check third col
-    elif (board['top-R'] == board['mid-R'] == board['low-R']) & (board['top-R'] != ' '):
+    elif (board['top-R'] == board['mid-R'] == board['low-R'] == letter):
         return True
     # check first diagonal
-    elif (board['top-L'] == board['mid-M'] == board['low-R']) & (board['top-L'] != ' '):
+    elif (board['top-L'] == board['mid-M'] == board['low-R'] == letter):
         return True
     # check second diagonal
-    elif (board['top-R'] == board['mid-M'] == board['low-L']) & (board['top-R'] != ' '):
+    elif (board['top-R'] == board['mid-M'] == board['low-L'] == letter):
         return True
     else:
         return False
@@ -49,19 +49,27 @@ def checkIfWon(board):
 
 def main():
     turn = 'X'
+    tempBoard = theBoard.copy()
+    print('\nHere are the names of the locations on the board:\n')
+    print('top-L|top-M|top-R')
+    print('-----+-----+-----')
+    print('mid-L|mid-M|mid-R')
+    print('-----+-----+-----')
+    print('low-L|low-M|low-R')
+    print('\nCASE IS IMPORTANT!\n')
     for i in range(0, 9):
-        printBoard(theBoard)
+        printBoard(tempBoard)
         print('Turn for ' + turn + '. Move on which space?')
         move = input()
-        while move not in theBoard.keys():
+        while move not in tempBoard.keys():
             print('Invalid space. Please enter it again.')
             move = input()
-        while not isEmpty(theBoard, move):
+        while not isEmpty(tempBoard, move):
             print('That spot is taken, please try again.')
             move = input()
-        theBoard[move] = turn
+        tempBoard[move] = turn
         # check if won here
-        if checkIfWon(theBoard):
+        if checkIfWon(tempBoard, turn):
             break
         if turn == 'X':
             turn = 'O'
@@ -69,12 +77,13 @@ def main():
             turn = 'X'
 
     print('\n\n\n')
-    print('Game over!')
-    printBoard(theBoard)
+    print('Game over!', turn, 'won!!')
+    printBoard(tempBoard)
 
     print('Play again? (y/n)')
     response = input()
     if response == 'y':
+        print('\n\n\n')
         main()
     else:
         exit()

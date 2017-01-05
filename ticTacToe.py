@@ -20,35 +20,35 @@ def printBoard(board):
 
 def checkIfWon(board):
     # check top row
-    if board['top-L'] == board['top-M'] == board['top-R'] & board['top-L'] != ' ':
+    if (board['top-L'] == board['top-M'] == board['top-R']) & (board['top-L'] != ' '):
         return True
     # check mid row
-    elif board['mid-L'] == board['mid-M'] == board['mid-R'] & board['mid-L'] != ' ':
+    elif (board['mid-L'] == board['mid-M'] == board['mid-R']) & (board['mid-L'] != ' '):
         return True
     # check low row
-    elif board['low-L'] == board['low-M'] == board['low-R'] & board['low-L'] != ' ':
+    elif (board['low-L'] == board['low-M'] == board['low-R']) & (board['low-L'] != ' '):
         return True
     # check first col
-    elif board['top-L'] == board['mid-L'] == board['low-L'] & board['top-L'] != ' ':
+    elif (board['top-L'] == board['mid-L'] == board['low-L']) & (board['top-L'] != ' '):
         return True
     # check second col
-    elif board['top-M'] == board['mid-M'] == board['low-M'] & board['top-M'] != ' ':
+    elif (board['top-M'] == board['mid-M'] == board['low-M']) & (board['top-M'] != ' '):
         return True
     # check third col
-    elif board['top-R'] == board['mid-R'] == board['low-R'] & board['top-R'] != ' ':
+    elif (board['top-R'] == board['mid-R'] == board['low-R']) & (board['top-R'] != ' '):
         return True
     # check first diagonal
-    elif board['top-L'] == board['mid-M'] == board['low-R'] & board['top-L'] != ' ':
+    elif (board['top-L'] == board['mid-M'] == board['low-R']) & (board['top-L'] != ' '):
         return True
     # check second diagonal
-    elif board['top-R'] == board['mid-M'] == board['low-L'] & board['top-R'] != ' ':
+    elif (board['top-R'] == board['mid-M'] == board['low-L'] )& (board['top-R'] != ' '):
         return True
     else:
         return False
 
 
 turn = 'X'
-for i in range(0, 9):
+for i in range(1, 9):
     printBoard(theBoard)
     print('Turn for ' + turn + '. Move on which space?')
     move = input()
@@ -59,7 +59,14 @@ for i in range(0, 9):
         print('That spot is taken, please try again.')
         move = input()
     theBoard[move] = turn
+    # check if won here
+    if checkIfWon(theBoard):
+        break
     if turn == 'X':
         turn = 'O'
     else:
         turn = 'X'
+
+print('\n\n\n')
+print('Game over!')
+printBoard(theBoard)

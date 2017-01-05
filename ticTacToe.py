@@ -41,32 +41,43 @@ def checkIfWon(board):
     elif (board['top-L'] == board['mid-M'] == board['low-R']) & (board['top-L'] != ' '):
         return True
     # check second diagonal
-    elif (board['top-R'] == board['mid-M'] == board['low-L'] )& (board['top-R'] != ' '):
+    elif (board['top-R'] == board['mid-M'] == board['low-L']) & (board['top-R'] != ' '):
         return True
     else:
         return False
 
 
-turn = 'X'
-for i in range(1, 9):
-    printBoard(theBoard)
-    print('Turn for ' + turn + '. Move on which space?')
-    move = input()
-    while move not in theBoard.keys():
-        print('Invalid space. Please enter it again.')
+def main():
+    turn = 'X'
+    for i in range(0, 9):
+        printBoard(theBoard)
+        print('Turn for ' + turn + '. Move on which space?')
         move = input()
-    while not isEmpty(theBoard, move):
-        print('That spot is taken, please try again.')
-        move = input()
-    theBoard[move] = turn
-    # check if won here
-    if checkIfWon(theBoard):
-        break
-    if turn == 'X':
-        turn = 'O'
-    else:
-        turn = 'X'
+        while move not in theBoard.keys():
+            print('Invalid space. Please enter it again.')
+            move = input()
+        while not isEmpty(theBoard, move):
+            print('That spot is taken, please try again.')
+            move = input()
+        theBoard[move] = turn
+        # check if won here
+        if checkIfWon(theBoard):
+            break
+        if turn == 'X':
+            turn = 'O'
+        else:
+            turn = 'X'
 
-print('\n\n\n')
-print('Game over!')
-printBoard(theBoard)
+    print('\n\n\n')
+    print('Game over!')
+    printBoard(theBoard)
+
+    print('Play again? (y/n)')
+    response = input()
+    if response == 'y':
+        main()
+    else:
+        exit()
+
+
+main()

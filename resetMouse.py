@@ -2,13 +2,24 @@
 # resetMouse.py - resets mouse on click - usuful for students with
 # cognitive disabilities.
 
-import pyautogui
+import pymouse
 
-width, height = pyautogui.size()
+width, height = m.screen_size()
 midWidth = width + 1 / 2
 midHeight = height + 1 / 2
+
+m = PyMouse()
+k = PyKeyboard()
+
+
+def onClick():
+    m.move(midWidth, midHeight)
+
+
 try:
     while True:
-        pyautogui.moveTo(midWidth, midHeight)
+        # if button is held down:
+            # continue
+        # onClick()
 except KeyboardInterrupt:
     print('\nDone.')

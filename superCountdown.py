@@ -13,14 +13,16 @@ def main():
     minutes = 0
     seconds = 0
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hHms', [
+        opts, args = getopt.getopt(sys.argv[1:], 'hH:m:s:', [
                                    'help', 'hours=', 'minutes=', 'seconds='])
     except getopt.GetoptError:
-        print('superCountdown.py -H <hours> -m <minutes> -s <seconds>')
+        print('OPTIONS:\n\nhelp\t-h, --help\nhours\t-H, --hours\n' +
+              'minutes\t-m, --minutes\nseconds\t-s, --seconds')
         sys.exit(2)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            print('superCountdown.py -H <hours> -m <minutes> -s <seconds>')
+            print('OPTIONS:\n\nhelp\t-h, --help\nhours\t-H, --hours\n' +
+                  'minutes\t-m, --minutes\nseconds\t-s, --seconds')
             sys.exit()
         elif opt in ('-H', '--hours'):
             hours = int(arg)
@@ -32,7 +34,7 @@ def main():
     while timeLeft > 0:
         m, s = divmod(timeLeft, 60)
         h, m = divmod(m, 60)
-        print("%d:%02d:%02d remaining" % (h, m, s))
+        print("\r%d:%02d:%02d remaining" % (h, m, s), end='')
         # http://stackoverflow.com/questions/775049/python-time-seconds-to-hms
         timeLeft -= 1
         time.sleep(1)

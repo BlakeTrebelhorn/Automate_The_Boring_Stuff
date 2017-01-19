@@ -16,13 +16,11 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], 'hH:m:s:', [
                                    'help', 'hours=', 'minutes=', 'seconds='])
     except getopt.GetoptError:
-        print('OPTIONS:\n\nhelp\t-h, --help\nhours\t-H, --hours\n' +
-              'minutes\t-m, --minutes\nseconds\t-s, --seconds')
+        printHelp()
         sys.exit(2)
     for opt, arg in opts:
         if opt in ('-h', '--help'):
-            print('OPTIONS:\n\nhelp\t-h, --help\nhours\t-H, --hours\n' +
-                  'minutes\t-m, --minutes\nseconds\t-s, --seconds')
+            printHelp()
             sys.exit()
         elif opt in ('-H', '--hours'):
             hours = int(arg)
@@ -38,7 +36,29 @@ def main():
         # http://stackoverflow.com/questions/775049/python-time-seconds-to-hms
         timeLeft -= 1
         time.sleep(1)
-    # subprocess.Popen(['start', 'alarm.wav'], shell=True)
+    playSound()
+    print('\nDone!')
+    timeOver = 0
+    try:
+        while True:
+            m, s = divmod(timeOver, 60)
+            h, m = divmod(m, 60)
+            if m % 2 == 0 & s == 0 & m != 0:
+                playSound()
+            print("\r%d:%02d:%02d over!" % (h, m, s), end='', flush=True)
+            timeOver += 1
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print('\nIt\'s about time!')
+
+
+def printHelp():
+    print('OPTIONS:\n\nhelp\t-h, --help\nhours\t-H, --hours\n' +
+          'minutes\t-m, --minutes\nseconds\t-s, --seconds')
+
+
+def playSound():
+    subprocess.Popen(['start', 'alarm.wav'], shell=True)
 
 
 if __name__ == "__main__":

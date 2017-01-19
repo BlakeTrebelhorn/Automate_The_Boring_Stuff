@@ -5,6 +5,8 @@ import time
 import sys
 import getopt
 import subprocess
+import pyaudio
+import wave
 
 
 def main():
@@ -58,7 +60,26 @@ def printHelp():
 
 
 def playSound():
-    subprocess.Popen(['start', 'alarm.wav'], shell=True)
+    chunk = 1411
+    # subprocess.Popen(['start', 'alarm.wav'], shell=True)
+    w = wave.open('alarm.wav', 'r')
+    p = pyaudio.PyAudio()
+    stream = p.open(format=p.get_format_from_width(w.getsampwidth()),
+                    channels=w.getnchannels(),
+                    rate=w.getframerate(),
+                    output=True)
+    data = w.readframes(chunk)
+
+    while data:
+        stream.write(data)
+        data = w.readframes(chunk)
+
+    # stop stream
+    stream.stop_stream()
+    stream.close()
+
+    # close PyAudio
+    p.terminate()
 
 
 if __name__ == "__main__":

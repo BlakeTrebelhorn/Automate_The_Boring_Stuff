@@ -38,15 +38,16 @@ def main():
         # http://stackoverflow.com/questions/775049/python-time-seconds-to-hms
         timeLeft -= 1
         time.sleep(1)
-    playSound()
+    print("\r%d:%02d:%02d remaining" % (h, m, 0), end='')  # to appease the OCD
     print('\nDone!')
     timeOver = 0
     try:
         while True:
             m, s = divmod(timeOver, 60)
             h, m = divmod(m, 60)
-            if m % 2 == 0 & s == 0 & m != 0:
+            if m % 2 == 0 and s == 0:
                 playSound()
+                timeOver += 3  # to roughly sync the time over
             print("\r%d:%02d:%02d over!" % (h, m, s), end='', flush=True)
             timeOver += 1
             time.sleep(1)

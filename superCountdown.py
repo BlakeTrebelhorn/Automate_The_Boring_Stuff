@@ -4,7 +4,7 @@
 import time
 import sys
 import getopt
-import subprocess
+# import subprocess
 import pyaudio
 import wave
 
@@ -46,8 +46,10 @@ def main():
             m, s = divmod(timeOver, 60)
             h, m = divmod(m, 60)
             if m % 2 == 0 and s == 0:
+                start = time.time()
                 playSound()
-                timeOver += 3  # to roughly sync the time over
+                # to roughly sync the time over
+                timeOver += int(time.time() - start)
             print("\r%d:%02d:%02d over!" % (h, m, s), end='', flush=True)
             timeOver += 1
             time.sleep(1)
